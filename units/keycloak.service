@@ -1,0 +1,14 @@
+[Unit]
+Description=Keycloak
+After=etcd.service
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill keycloak
+ExecStartPre=-/usr/bin/docker rm keycloak
+ExecStartPre=/usr/bin/docker pull jboss/keycloak
+ExecStart=/usr/bin/docker run --name keycloak -p 80:8080 -p 90:9090 jboss/keycloak 
+ExecStartPost=/usr/bin/etcdctl set /keycloak running
+ExecStop=/usr/bin/docker stop keycloak
+ExecStopPost=/usr/bin/etcdctl rm /keycloak
