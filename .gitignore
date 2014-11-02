@@ -2,3 +2,6 @@
 .vagrant/
 log/
 wildfly/
+launchpad/
+credentials.edn
+.nrepl-port
