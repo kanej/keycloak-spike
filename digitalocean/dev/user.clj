@@ -13,16 +13,10 @@
    [clojure.tools.namespace.repl :refer [refresh refresh-all]]
    [clojure.tools.reader.edn :as edn]
    [digitalocean.v2.core :as do]
-   [digitalocean]))
+   [digitalocean :refer [create-keycloak-droplet destroy-keycloak-droplet]]))
 
 (defonce credentials
   (let [config-as-text (slurp "credentials.edn")]
     (edn/read-string config-as-text)))
 
 (defonce token (:token credentials))
-
-(defn power-off [token droplet-id]
-  (do/run-request :post
-              (do/resource-url (str "droplets/" droplet-id "/actions"))
-              token
-              {:type "power_off"}))
