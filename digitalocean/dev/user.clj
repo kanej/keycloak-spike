@@ -20,3 +20,9 @@
     (edn/read-string config-as-text)))
 
 (defonce token (:token credentials))
+
+(def ssh-key-id
+  (-> (do/ssh-keys token)
+      :ssh_keys
+      first
+      :id))
