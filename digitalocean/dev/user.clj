@@ -26,3 +26,5 @@
       :ssh_keys
       first
       :id))
+
+(def user-data (slurp "../user-data"))
