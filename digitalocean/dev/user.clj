@@ -16,15 +16,16 @@
    [digitalocean :refer [create-keycloak-droplet destroy-keycloak-droplet]]))
 
 (defonce credentials
-  (let [config-as-text (slurp "credentials.edn")]
-    (edn/read-string config-as-text)))
+  (edn/read-string (slurp "credentials.edn")))
 
 (defonce token (:token credentials))
 
-(def ssh-key-id
-  (-> (do/ssh-keys token)
-      :ssh_keys
-      first
-      :id))
-
 (def user-data (slurp "../user-data"))
+
+(defn init []
+  (def ssh-key-id
+    (-> (do/ssh-keys token)
+        :ssh_keys
+        first
+        :id)))
+
